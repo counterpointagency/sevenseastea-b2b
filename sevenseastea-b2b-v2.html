@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seven Seas Tea — Wholesale Portal</title>
+
+<!-- Exact fonts from the live theme: Open Sans Condensed (body/heading/accent) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────────────────────
+   EXACT CSS CUSTOM PROPERTIES FROM settings_data.json
+   scheme-1 = primary site scheme
+   scheme-62a = teal/action scheme (drawers, buttons, inputs)
+───────────────────────────────────────────────────────── */
+:root {
+  /* Brand colours - direct from color_schemes */
+  --color-background:        #faf8f3;
+  --color-foreground:        #231f20;
+  --color-foreground-heading:#231f20;
+  --color-primary:           #231f20;
+  --color-primary-hover:     #bbdcd2;
+  --color-border:            rgba(0,0,0,0.06);
+  --color-border-solid:      #ecede2;
+
+  /* Teal - the brand accent (from scheme-62a primary_button_background) */
+  --color-teal:              #bbdcd2;
+  --color-teal-dark:         #8ec4b8;
+
+  /* Sage/sand - from primary_button_background scheme-1 */
+  --color-sage:              #ecede2;
+
+  /* Dark ink */
+  --color-ink:               #231f20;
+
+  /* Button colours - scheme-1 primary */
+  --color-btn-primary-bg:    #ecede2;
+  --color-btn-primary-text:  #231f20;
+  --color-btn-primary-hover-bg:  #231f20;
+  --color-btn-primary-hover-text:#ffffff;
+
+  /* Button colours - scheme-62a (teal buttons) */
+  --color-btn-teal-bg:       #bbdcd2;
+  --color-btn-teal-text:     #ffffff;
+  --color-btn-teal-hover-bg: #333333;
+
+  /* Input colours - scheme-62a */
+  --color-input-bg:          #ecede2;
+  --color-input-text:        #333333;
+  --color-input-border:      #dfdfdf;
+
+  /* Fonts - Open Sans Condensed (exact Shopify font: open_sans_condensed_n4/n6) */
+  --font-body:       'Open Sans Condensed', 'Open Sans', sans-serif;
+  --font-heading:    'Open Sans Condensed', 'Open Sans', sans-serif;
+  --font-weight-body:    300;
+  --font-weight-heading: 700;  /* n6 = semibold/bold */
+
+  /* Type sizes from settings */
+  --font-size-body:  14px;
+  --font-size-h1:    56px;
+  --font-size-h2:    48px;
+  --font-size-h3:    32px;
+  --font-size-h4:    24px;
+  --font-size-h5:    14px;
+  --font-size-h6:    12px;
+
+  /* Layout - page_width: narrow → matches 120rem normal */
+  --page-width:      1200px;
+
+  /* Border radius from settings */
+  --radius-btn:      14px;
+  --radius-input:    4px;
+  --radius-card:     4px;
+  --radius-badge:    100px;
+
+  /* Spacing scale */
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2rem;
+  --space-2xl: 3rem;
+
+  /* Animation */
+  --animation-speed: 0.125s;
+  --animation-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Header height - from header.liquid */
+  --header-height: 60px;
+
+  /* Z-index layers */
+  --layer-sticky:  8;
+  --layer-overlay: 16;
+}
+
+/* ─────────────────────────────────────────────────────────
+   RESET + BASE - mirrors base.css fundamentals
+───────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-body);
+  font-size: var(--font-size-body);
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────────────────
+   HEADER - rebuilt from header.liquid + header CSS
+   Matches: two-row layout, logo left, nav center, actions right
+───────────────────────────────────────────────────────── */
+#header-group {
+  position: sticky;
+  top: -1px;
+  z-index: var(--layer-sticky);
+}
+
+.header-section {
+  position: sticky;
+  top: -1px;
+  z-index: var(--layer-sticky);
+}
+
+header-component,
+.header {
+  display: block;
+}
+
+.header__row {
+  background-color: var(--color-background);
+  border-bottom: 1px solid var(--color-border-solid);
+  position: relative;
+}
+
+.header__row--top .header__columns {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: var(--header-height);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Logo block - exact logo height from settings: logo_height: 40 */
+.header__logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.header__logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+/* Nav menu - center column */
+.header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.menu-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 0;
+}
+
+.menu-list__link {
+  display: block;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--color-foreground);
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color var(--animation-speed) var(--animation-easing);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.menu-list__link:hover {
+  color: var(--color-teal-dark);
+}
+
+/* B2B nav item - styled as the secondary button from scheme-1 */
+.menu-list__link--b2b {
+  background-color: var(--color-teal);
+  color: #000000;
+  border: 1px solid #000000;
+  border-radius: var(--radius-btn);
+  padding: 0.5rem 1.25rem;
+  margin-left: 0.75rem;
+  font-weight: 700;
+  transition: background-color var(--animation-speed), color var(--animation-speed);
+}
+
+.menu-list__link--b2b:hover {
+  background-color: #231f20;
+  color: #ffffff;
+}
+
+.menu-list__link--b2b.active {
+  background-color: var(--color-ink);
+  color: #ffffff;
+  border-color: var(--color-ink);
+}
+
+/* Header actions (search, account, cart icons) */
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.header__icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-foreground);
+  transition: color var(--animation-speed);
+  text-decoration: none;
+}
+
+.header__icon-btn:hover { color: var(--color-teal-dark); }
+
+.header__icon-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ─────────────────────────────────────────────────────────
+   STOREFRONT HERO
+───────────────────────────────────────────────────────── */
+#storefront { display: block; }
+
+.hero {
+  position: relative;
+  min-height: 520px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #1a3a35 0%, #2c6059 50%, #1a3832 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #ffffff;
+  padding: 4rem 2rem;
+  max-width: 700px;
+}
+
+.hero__eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 1rem;
+}
+
+.hero__title {
+  font-family: var(--font-heading);
+  font-size: clamp(36px, 5vw, var(--font-size-h1));
+  font-weight: var(--font-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  margin-bottom: 1.25rem;
+}
+
+.hero__sub {
+  font-size: 15px;
+  font-weight: 300;
+  opacity: 0.85;
+  line-height: 1.8;
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+}
+
+.hero__awards {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.award-badge { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+.award-circle {
+  width: 68px; height: 68px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 9px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.06);
+  line-height: 1.3;
+  text-align: center;
+  padding: 6px;
+}
+
+.award-circle.gold   { border-color: #c9a84c; color: #c9a84c; }
+.award-circle.silver { border-color: #b8b8b8; color: #b8b8b8; }
+.award-circle.bronze { border-color: #a07050; color: #a07050; }
+
+.award-label {
+  font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; opacity: 0.7; color: #fff;
+}
+
+/* Wholesale CTA section */
+.wholesale-cta {
+  background: #ffffff;
+  text-align: center;
+  padding: 5rem 2rem;
+  border-bottom: 1px solid var(--color-border-solid);
+}
+
+.wholesale-cta__eyebrow {
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--color-teal-dark); margin-bottom: 1rem;
+}
+
+.wholesale-cta__title {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 4vw, var(--font-size-h2));
+  font-weight: var(--font-weight-heading);
+  text-transform: uppercase;
+  color: var(--color-foreground-heading);
+  margin-bottom: 1rem;
+  letter-spacing: 0.03em;
+}
+
+.wholesale-cta__body {
+  font-size: 14px; color: #666; line-height: 1.8;
+  max-width: 480px; margin: 0 auto 2rem;
+}
+
+/* ─────────────────────────────────────────────────────────
+   BUTTONS - exact from settings
+   primary: bg #ecede2, text #231f20, hover bg #231f20 text #fff
+   secondary: bg #bbdcd2, text #000, border #000
+───────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-body);
+  font-size: 12px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-btn);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--animation-speed) var(--animation-easing),
+              color var(--animation-speed) var(--animation-easing),
+              border-color var(--animation-speed) var(--animation-easing);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background-color: var(--color-btn-primary-bg);
+  color: var(--color-btn-primary-text);
+  border-color: var(--color-ink);
+}
+.btn--primary:hover {
+  background-color: var(--color-btn-primary-hover-bg);
+  color: var(--color-btn-primary-hover-text);
+  border-color: #000000;
+}
+
+.btn--teal {
+  background-color: var(--color-btn-teal-bg);
+  color: var(--color-btn-teal-text);
+  border-color: #000000;
+}
+.btn--teal:hover {
+  background-color: var(--color-btn-teal-hover-bg);
+  color: #ffffff;
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+.btn--outline:hover {
+  background-color: var(--color-ink);
+  color: #ffffff;
+}
+
+.btn--sm {
+  font-size: 11px;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-btn);
+}
+
+.btn--full { width: 100%; }
+
+.btn--danger {
+  background-color: transparent;
+  color: #8B0000;
+  border-color: #8B0000;
+}
+.btn--danger:hover { background-color: #8B0000; color: #fff; }
+
+/* ─────────────────────────────────────────────────────────
+   FORM INPUTS - from scheme-62a input settings
+───────────────────────────────────────────────────────── */
+.field__input,
+.field__select,
+.field__textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background-color: var(--color-input-bg);
+  color: var(--color-input-text);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-input);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color var(--animation-speed), background-color var(--animation-speed);
+  -webkit-appearance: none;
+}
+
+.field__input:focus,
+.field__select:focus,
+.field__textarea:focus {
+  border-color: var(--color-teal-dark);
+  background-color: #fff;
+}
+
+.field__input.has-value {
+  border-color: var(--color-teal);
+  background-color: #fff;
+  font-weight: 600;
+}
+
+.field__textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+.field__label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 0.4rem;
+}
+
+.field { margin-bottom: 1rem; }
+
+/* ─────────────────────────────────────────────────────────
+   B2B PORTAL
+───────────────────────────────────────────────────────── */
+#b2b-portal { display: none; }
+
+/* LOGIN */
+#login-screen {
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-sage);
+  padding: 3rem 1.5rem;
+}
+
+.login-card {
+  background: var(--color-background);
+  border: 1px solid var(--color-border-solid);
+  border-radius: var(--radius-card);
+  max-width: 440px;
+  width: 100%;
+  padding: 3.5rem 3rem;
+}
+
+.login-card__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-teal-dark);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.login-card__title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: var(--font-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-heading);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.login-card__sub {
+  font-size: 13px;
+  color: #666;
+  text-align: center;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.login-divider {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  margin: 1.25rem 0;
+  position: relative;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 42%;
+  height: 1px;
+  background: var(--color-border-solid);
+}
+
+.login-divider::before { left: 0; }
+.login-divider::after  { right: 0; }
+
+.login-note {
+  font-size: 11px;
+  color: #999;
+  text-align: center;
+  margin-top: 1.25rem;
+  line-height: 1.7;
+}
+
+.login-note a { color: var(--color-teal-dark); }
+
+/* PORTAL HEADER */
+.portal-header {
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border-solid);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.portal-header__welcome {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: var(--font-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-heading);
+}
+
+.portal-header__welcome span { color: var(--color-teal-dark); }
+
+.portal-header__meta {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+  letter-spacing: 0.04em;
+}
+
+.portal-header__actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* PORTAL TABS */
+.portal-tabs {
+  background: var(--color-background);
+  border-bottom: 1px solid var(--color-border-solid);
+  padding: 0 2rem;
+  display: flex;
+  overflow-x: auto;
+}
+
+.portal-tab {
+  padding: 0.9rem 1.5rem;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  color: #888;
+  transition: all var(--animation-speed);
+  white-space: nowrap;
+  font-family: var(--font-body);
+}
+
+.portal-tab.active { color: var(--color-foreground); border-bottom-color: var(--color-ink); }
+.portal-tab:hover  { color: var(--color-foreground); }
+
+/* AGENT BANNER */
+.agent-banner {
+  background: #fef9e6;
+  border-bottom: 2px solid #e8c840;
+  padding: 0.75rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.agent-tag {
+  background: #e8c840;
+  color: #231f20;
+  padding: 2px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-badge);
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────────────────
+   ORDER TABLE
+───────────────────────────────────────────────────────── */
+.portal-content { padding: 2rem; }
+
+.order-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.order-table-wrap {
+  background: var(--color-background);
+  border: 1px solid var(--color-border-solid);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.table-toolbar {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border-solid);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  background: var(--color-sage);
+}
+
+.table-toolbar .field__input,
+.table-toolbar .field__select {
+  margin-bottom: 0;
+}
+
+.table-toolbar .field__input { flex: 1; min-width: 180px; }
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table th {
+  background: var(--color-sage);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #888;
+  border-bottom: 1px solid var(--color-border-solid);
+  white-space: nowrap;
+  font-family: var(--font-body);
+}
+
+.product-table td {
+  padding: 0;
+  border-bottom: 1px solid var(--color-border-solid);
+  vertical-align: middle;
+}
+
+.td-inner { padding: 0.65rem 1rem; }
+
+.product-row { transition: background var(--animation-speed); }
+.product-row:hover { background: rgba(187,220,210,0.08); }
+.product-row.has-qty { background: rgba(187,220,210,0.18); }
+.product-row.has-qty:hover { background: rgba(187,220,210,0.28); }
+
+.product-thumb {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 2px;
+  background: var(--color-sage);
+}
+
+.product-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-foreground-heading);
+  margin-bottom: 1px;
+}
+
+.product-type {
+  font-size: 11px;
+  color: #999;
+  letter-spacing: 0.04em;
+}
+
+.variant-label { font-size: 12px; color: #777; }
+
+.price-b2b {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-foreground);
+}
+
+.price-rrp {
+  font-size: 11px;
+  color: #aaa;
+}
+
+.sku-text { font-size: 11px; color: #aaa; font-family: monospace; }
+
+.qty-input {
+  width: 70px;
+  padding: 0.45rem 0.6rem;
+  text-align: center;
+  border: 1px solid var(--color-input-border);
+  background: var(--color-input-bg);
+  border-radius: var(--radius-input);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-foreground);
+  outline: none;
+  transition: border-color var(--animation-speed), background var(--animation-speed);
+}
+
+.qty-input:focus { border-color: var(--color-teal); background: #fff; }
+.qty-input.has-value { border-color: var(--color-teal); background: #fff; font-weight: 700; }
+
+.line-total { font-size: 13px; font-weight: 700; color: var(--color-foreground); }
+
+.no-results { padding: 3rem; text-align: center; color: #aaa; font-size: 14px; }
+
+/* ─────────────────────────────────────────────────────────
+   CART PANEL
+───────────────────────────────────────────────────────── */
+.cart-panel {
+  background: var(--color-background);
+  border: 1px solid var(--color-border-solid);
+  border-radius: var(--radius-card);
+  position: sticky;
+  top: calc(var(--header-height) + 2rem);
+  overflow: hidden;
+}
+
+.cart-panel__header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border-solid);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-sage);
+}
+
+.cart-panel__title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: var(--font-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-foreground-heading);
+}
+
+.cart-count {
+  background: var(--color-teal);
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: var(--radius-badge);
+}
+
+.cart-empty {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: #aaa;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.cart-items {
+  padding: 1rem 1.5rem;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.cart-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-border-solid);
+  align-items: flex-start;
+}
+
+.cart-item:last-child { border-bottom: none; }
+
+.cart-item__img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  background: var(--color-sage);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.cart-item__info { flex: 1; min-width: 0; }
+
+.cart-item__name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-foreground-heading);
+  line-height: 1.4;
+}
+
+.cart-item__meta { font-size: 11px; color: #aaa; margin-top: 1px; }
+.cart-item__price { font-size: 13px; font-weight: 700; white-space: nowrap; }
+
+.cart-item__remove {
+  font-size: 18px;
+  color: #ccc;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 2px;
+  flex-shrink: 0;
+  transition: color var(--animation-speed);
+  background: none;
+  border: none;
+  font-family: sans-serif;
+}
+
+.cart-item__remove:hover { color: #8B0000; }
+
+.cart-totals {
+  padding: 1.25rem 1.5rem;
+  border-top: 1px solid var(--color-border-solid);
+}
+
+.cart-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 0.6rem;
+}
+
+.cart-row .label { color: #888; }
+
+.cart-row--total {
+  font-size: 15px;
+  font-weight: 700;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--color-border-solid);
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.cart-row--total .label { color: var(--color-foreground); }
+
+.cart-note {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────────────────────
+   PREVIOUS ORDERS TAB
+───────────────────────────────────────────────────────── */
+.orders-table-wrap {
+  background: var(--color-background);
+  border: 1px solid var(--color-border-solid);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+
+.orders-table-wrap__header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-border-solid);
+  background: var(--color-sage);
+}
+
+.orders-table-wrap__title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: var(--font-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-heading);
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  background: var(--color-sage);
+  padding: 0.75rem 1.25rem;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #888;
+  border-bottom: 1px solid var(--color-border-solid);
+  font-family: var(--font-body);
+}
+
+.orders-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border-solid);
+  font-size: 13px;
+}
+
+.orders-table tr:hover td { background: rgba(187,220,210,0.08); }
+
+.order-status {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-badge);
+}
+
+.order-status--paid    { background: #e8f7ee; color: #006400; }
+.order-status--pending { background: #fef8e6; color: #7a5c00; }
+.order-status--sent    { background: #e8effe; color: #2a4db0; }
+
+/* ─────────────────────────────────────────────────────────
+   CHECKOUT MODAL
+───────────────────────────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(35,31,32,0.65);
+  z-index: var(--layer-overlay);
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--color-background);
+  border: 1px solid var(--color-border-solid);
+  border-radius: var(--radius-card);
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal__header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--color-border-solid);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  background: var(--color-sage);
+  z-index: 1;
+}
+
+.modal__title {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: var(--font-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-heading);
+}
+
+.modal__close {
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+  line-height: 1;
+  background: none;
+  border: none;
+  transition: color var(--animation-speed);
+  font-family: sans-serif;
+}
+
+.modal__close:hover { color: var(--color-ink); }
+
+.modal__body { padding: 2rem; }
+
+.modal__section { margin-bottom: 2rem; }
+
+.modal__section-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #aaa;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--color-border-solid);
+  font-family: var(--font-body);
+}
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-grid .full { grid-column: 1 / -1; }
+
+/* Shipping options */
+.shipping-options { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.shipping-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--color-border-solid);
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  transition: border-color var(--animation-speed), background var(--animation-speed);
+}
+
+.shipping-option.selected {
+  border-color: var(--color-ink);
+  background: var(--color-sage);
+}
+
+.shipping-option input[type="radio"] { accent-color: var(--color-ink); width: 16px; height: 16px; flex-shrink: 0; }
+.shipping-option__info { flex: 1; }
+.shipping-option__name { font-size: 14px; font-weight: 700; color: var(--color-foreground); }
+.shipping-option__desc { font-size: 12px; color: #aaa; margin-top: 2px; }
+.shipping-option__price { font-size: 13px; font-weight: 700; white-space: nowrap; }
+
+/* Order summary block */
+.order-summary-block {
+  background: var(--color-sage);
+  border-radius: var(--radius-card);
+  padding: 1.25rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 0.5rem;
+}
+
+.summary-row--total {
+  font-size: 15px;
+  font-weight: 700;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--color-border-solid);
+  margin-top: 0.25rem;
+  margin-bottom: 0;
+}
+
+.summary-note {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+.payment-info-block {
+  background: rgba(187,220,210,0.2);
+  border: 1px solid var(--color-teal);
+  border-radius: var(--radius-input);
+  padding: 1rem 1.25rem;
+  margin-top: 0.75rem;
+}
+
+.payment-info-block p {
+  font-size: 12px;
+  color: var(--color-foreground);
+  line-height: 1.7;
+}
+
+/* SUCCESS */
+.success-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(35,31,32,0.7);
+  z-index: calc(var(--layer-overlay) + 1);
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.success-overlay.open { display: flex; }
+
+.success-card {
+  background: var(--color-background);
+  border: 1px solid var(--color-border-solid);
+  border-radius: var(--radius-card);
+  max-width: 460px;
+  width: 100%;
+  padding: 3.5rem 3rem;
+  text-align: center;
+}
+
+.success-card__icon { font-size: 40px; margin-bottom: 1.25rem; }
+
+.success-card__title {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: var(--font-weight-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-foreground-heading);
+  margin-bottom: 0.75rem;
+}
+
+.success-card__sub {
+  font-size: 14px;
+  color: #777;
+  line-height: 1.8;
+  max-width: 340px;
+  margin: 0 auto 2rem;
+}
+
+.success-detail {
+  background: var(--color-sage);
+  border-radius: var(--radius-card);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.success-detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 0.5rem;
+}
+
+.success-detail-row:last-child { margin-bottom: 0; }
+.success-detail-label { color: #aaa; }
+
+/* ─────────────────────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .order-layout { grid-template-columns: 1fr; }
+  .cart-panel { position: static; }
+}
+
+@media (max-width: 768px) {
+  .header__row--top .header__columns { padding: 0 1rem; gap: 1rem; }
+  .header__logo img { height: 28px; } /* logo_height_mobile: 28 */
+  .menu-list { display: none; }
+  .portal-content { padding: 1rem; }
+  .portal-header { padding: 1rem; }
+  .portal-tabs { padding: 0 1rem; }
+  .login-card { padding: 2.5rem 1.5rem; }
+  .modal__body { padding: 1.5rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .hero__title { font-size: 36px; }
+  .hero__awards { gap: 24px; }
+  .modal-overlay { padding: 0.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER - exact structure from header.liquid ── -->
+<div id="header-group">
+  <div class="header-section">
+    <header-component id="header-component" class="header">
+      <div class="header__row header__row--top">
+        <div class="header__columns">
+
+          <!-- Logo - exact asset from settings -->
+          <a href="#" class="header__logo" onclick="showStorefront(); return false;" aria-label="Seven Seas Tea">
+            <img
+              src="https://cdn.shopify.com/s/files/1/0771/8138/6985/files/sevenseas-rgb_trans_back.png"
+              alt="Seven Seas Tea"
+              onerror="this.outerHTML='<span style=\'font-family:var(--font-heading);font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-foreground)\'>SEVEN SEAS TEA</span>'"
+            >
+          </a>
+
+          <!-- Nav menu -->
+          <nav class="header__nav" aria-label="Main navigation">
+            <ul class="menu-list" role="list">
+              <li><a href="https://sevenseastea.com.au/collections/all" target="_blank" class="menu-list__link">Shop</a></li>
+              <li><a href="https://sevenseastea.com.au/pages/our-story" target="_blank" class="menu-list__link">Our Story</a></li>
+              <li><a href="https://sevenseastea.com.au/pages/contact" target="_blank" class="menu-list__link">Contact</a></li>
+              <li>
+                <span class="menu-list__link menu-list__link--b2b" id="b2b-nav-btn" onclick="showB2BPortal()" role="button" tabindex="0">
+                  Wholesale
+                </span>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Header actions: search, account, cart -->
+          <div class="header__actions">
+            <a href="https://sevenseastea.com.au/search" target="_blank" class="header__icon-btn" aria-label="Search">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+            </a>
+            <a href="https://sevenseastea.com.au/account" target="_blank" class="header__icon-btn" aria-label="Account">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </a>
+            <a href="https://sevenseastea.com.au/cart" target="_blank" class="header__icon-btn" aria-label="Cart">
+              <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </header-component>
+  </div>
+</div>
+
+<!-- ── STOREFRONT ── -->
+<div id="storefront">
+  <div class="hero">
+    <img class="hero__img" src="https://cdn.shopify.com/s/files/1/0771/8138/6985/files/MicrosoftTeams-image_1.jpg" alt="Margaret River coastline" onerror="this.style.display='none'">
+    <div class="hero__content">
+      <p class="hero__eyebrow">Single Origin &nbsp;·&nbsp; Organic &nbsp;·&nbsp; Small Batched</p>
+      <h1 class="hero__title">Hand Blended in<br>Margaret River</h1>
+      <p class="hero__sub">Inspired by the coast, crafted by hand. Teas sourced from around the globe, blended in one of Australia's most celebrated regions.</p>
+      <div class="hero__awards">
+        <div class="award-badge">
+          <div class="award-circle gold">GOLD<br>2025</div>
+          <span class="award-label">Tea Garden</span>
+        </div>
+        <div class="award-badge">
+          <div class="award-circle silver">SILVER<br>2025</div>
+          <span class="award-label">Rooibos Chai</span>
+        </div>
+        <div class="award-badge">
+          <div class="award-circle bronze">BRONZE<br>2025</div>
+          <span class="award-label">English Breakfast</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wholesale-cta">
+    <p class="wholesale-cta__eyebrow">For Wholesale Stockists</p>
+    <h2 class="wholesale-cta__title">Open a Wholesale Account</h2>
+    <p class="wholesale-cta__body">Access our full range at trade pricing, place orders instantly, and manage your account in one place.</p>
+    <button class="btn btn--teal" onclick="showB2BPortal()">Access Wholesale Portal</button>
+  </div>
+</div>
+
+<!-- ── B2B PORTAL ── -->
+<div id="b2b-portal">
+
+  <!-- LOGIN -->
+  <div id="login-screen">
+    <div class="login-card">
+      <p class="login-card__eyebrow">Seven Seas Tea</p>
+      <h2 class="login-card__title">Wholesale Portal</h2>
+      <p class="login-card__sub">Sign in with your approved wholesale account to access trade pricing and place orders.</p>
+
+      <div class="field">
+        <label class="field__label">Email Address</label>
+        <input type="email" class="field__input" placeholder="you@yourbusiness.com.au">
+      </div>
+      <div class="field">
+        <label class="field__label">Password</label>
+        <input type="password" class="field__input" placeholder="••••••••">
+      </div>
+
+      <button class="btn btn--primary btn--full" onclick="alert('Use the demo button below to explore the portal.')">Sign In</button>
+
+      <div class="login-divider">or</div>
+
+      <button class="btn btn--teal btn--full" onclick="enterPortal(false)" style="margin-bottom:0.75rem;">
+        ✦ &nbsp; Enter Demo as Stockist
+      </button>
+      <button class="btn btn--full" onclick="enterPortal(true)" style="background:#fef9e6;border-color:#e8c840;color:#231f20;">
+        🔑 &nbsp; Enter Demo as Sales Agent
+      </button>
+
+      <p class="login-note">Don't have an account? Contact <a href="mailto:hello@sevenseastea.com.au">hello@sevenseastea.com.au</a> to apply.</p>
+    </div>
+  </div>
+
+  <!-- PORTAL MAIN -->
+  <div id="portal-main" style="display:none;">
+
+    <!-- Agent banner -->
+    <div class="agent-banner" id="agent-banner" style="display:none;">
+      <span class="agent-tag">Agent Mode</span>
+      <span>Logged in as <strong>Kalani — Counterpoint Agency</strong>, ordering on behalf of: <strong id="agent-customer-name">Demo Stockist Account</strong></span>
+      <button class="btn btn--sm btn--outline" style="margin-left:auto;" onclick="alert('In the live portal, you can switch between customer accounts here.')">Switch Customer</button>
+    </div>
+
+    <!-- Portal header -->
+    <div class="portal-header">
+      <div>
+        <div class="portal-header__welcome">Welcome, <span id="portal-name">Demo Stockist</span></div>
+        <div class="portal-header__meta">Approved Wholesale Account &nbsp;·&nbsp; 50% off RRP &nbsp;·&nbsp; All prices ex. GST</div>
+      </div>
+      <div class="portal-header__actions">
+        <button class="btn btn--sm btn--outline" onclick="switchTab('orders')">Order History</button>
+        <button class="btn btn--sm btn--danger" onclick="logout()">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="portal-tabs">
+      <div class="portal-tab active" id="tab-order" onclick="switchTab('order')">Place Order</div>
+      <div class="portal-tab" id="tab-orders" onclick="switchTab('orders')">Previous Orders</div>
+    </div>
+
+    <!-- ORDER TAB -->
+    <div id="view-order" class="portal-content">
+      <div class="order-layout">
+
+        <!-- Product table -->
+        <div>
+          <div class="order-table-wrap">
+            <div class="table-toolbar">
+              <input type="text" class="field__input" placeholder="Search products..." id="search-input" oninput="filterProducts()" style="margin-bottom:0;">
+              <select class="field__select" id="type-filter" onchange="filterProducts()" style="margin-bottom:0;min-width:160px;">
+                <option value="">All Categories</option>
+              </select>
+              <span style="font-size:12px;color:#aaa;white-space:nowrap;" id="product-count"></span>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="product-table" id="product-table">
+                <thead>
+                  <tr>
+                    <th style="width:52px;"></th>
+                    <th>Product</th>
+                    <th>Size</th>
+                    <th>SKU</th>
+                    <th>B2B Price (ex. GST)</th>
+                    <th>RRP (inc. GST)</th>
+                    <th>Qty</th>
+                    <th>Line Total (ex. GST)</th>
+                  </tr>
+                </thead>
+                <tbody id="product-tbody"></tbody>
+              </table>
+              <div class="no-results" id="no-results" style="display:none;">No products match your search.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cart panel -->
+        <div class="cart-panel">
+          <div class="cart-panel__header">
+            <span class="cart-panel__title">Your Order</span>
+            <span class="cart-count" id="cart-count">0 items</span>
+          </div>
+          <div id="cart-empty" class="cart-empty">
+            <div style="font-size:28px;margin-bottom:0.75rem;">🫖</div>
+            Add quantities from the table to build your order.
+          </div>
+          <div id="cart-items" class="cart-items" style="display:none;"></div>
+          <div id="cart-totals" class="cart-totals" style="display:none;">
+            <div class="cart-row"><span class="label">Subtotal (ex. GST)</span><span id="cart-subtotal">$0.00</span></div>
+            <div class="cart-row"><span class="label">GST (10%)</span><span id="cart-gst">$0.00</span></div>
+            <div class="cart-row cart-row--total"><span class="label">Total (inc. GST)</span><span id="cart-total">$0.00</span></div>
+            <p class="cart-note">Shipping confirmed on invoice. Payment terms set by Seven Seas Tea.</p>
+            <button class="btn btn--teal btn--full" style="margin-top:1.25rem;" onclick="openCheckout()">Proceed to Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS TAB -->
+    <div id="view-orders" class="portal-content" style="display:none;">
+      <div class="orders-table-wrap">
+        <div class="orders-table-wrap__header">
+          <div class="orders-table-wrap__title">Previous Orders</div>
+          <div style="font-size:13px;color:#aaa;margin-top:4px;">Your complete order history with Seven Seas Tea</div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Lines</th>
+                <th>Total (inc. GST)</th>
+                <th>Status</th>
+                <th>PO Reference</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>#SST-0042</strong></td><td>12 Mar 2026</td><td>8 lines</td><td><strong>$486.00</strong></td><td><span class="order-status order-status--paid">Paid</span></td><td style="color:#aaa;">PO-2026-031</td><td><button class="btn btn--sm btn--outline" onclick="alert('Reorder coming in the live build.')">Reorder</button></td></tr>
+              <tr><td><strong>#SST-0038</strong></td><td>18 Feb 2026</td><td>12 lines</td><td><strong>$724.00</strong></td><td><span class="order-status order-status--paid">Paid</span></td><td style="color:#aaa;">PO-2026-019</td><td><button class="btn btn--sm btn--outline" onclick="alert('Reorder coming in the live build.')">Reorder</button></td></tr>
+              <tr><td><strong>#SST-0031</strong></td><td>5 Feb 2026</td><td>6 lines</td><td><strong>$312.00</strong></td><td><span class="order-status order-status--sent">Invoice Sent</span></td><td style="color:#aaa;">—</td><td><button class="btn btn--sm btn--outline" onclick="alert('Reorder coming in the live build.')">Reorder</button></td></tr>
+              <tr><td><strong>#SST-0024</strong></td><td>10 Jan 2026</td><td>15 lines</td><td><strong>$1,138.00</strong></td><td><span class="order-status order-status--paid">Paid</span></td><td style="color:#aaa;">PO-2026-004</td><td><button class="btn btn--sm btn--outline" onclick="alert('Reorder coming in the live build.')">Reorder</button></td></tr>
+              <tr><td><strong>#SST-0017</strong></td><td>8 Dec 2025</td><td>9 lines</td><td><strong>$594.00</strong></td><td><span class="order-status order-status--paid">Paid</span></td><td style="color:#aaa;">PO-2025-112</td><td><button class="btn btn--sm btn--outline" onclick="alert('Reorder coming in the live build.')">Reorder</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal">
+    <div class="modal__header">
+      <span class="modal__title">Checkout</span>
+      <button class="modal__close" onclick="closeCheckout()">×</button>
+    </div>
+    <div class="modal__body">
+
+      <div class="modal__section">
+        <div class="modal__section-title">Delivery Address</div>
+        <div class="form-grid">
+          <div class="field full"><label class="field__label">Business Name</label><input type="text" class="field__input" value="Demo Stockist Pty Ltd"></div>
+          <div class="field full"><label class="field__label">Street Address</label><input type="text" class="field__input" placeholder="123 Main Street"></div>
+          <div class="field"><label class="field__label">Suburb</label><input type="text" class="field__input" placeholder="Margaret River"></div>
+          <div class="field"><label class="field__label">State</label><select class="field__select"><option>WA</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>TAS</option><option>NT</option><option>ACT</option></select></div>
+          <div class="field"><label class="field__label">Postcode</label><input type="text" class="field__input" placeholder="6285"></div>
+          <div class="field"><label class="field__label">Country</label><input type="text" class="field__input" value="Australia" readonly></div>
+        </div>
+        <button onclick="alert('In the live portal, save and switch between multiple delivery addresses.')" style="font-size:12px;color:var(--color-teal-dark);background:none;border:none;cursor:pointer;font-family:var(--font-body);text-decoration:underline;letter-spacing:0.04em;">+ Save another delivery address</button>
+      </div>
+
+      <div class="modal__section">
+        <div class="modal__section-title">Shipping Method</div>
+        <div class="shipping-options">
+          <label class="shipping-option selected" id="ship-standard">
+            <input type="radio" name="shipping" value="standard" checked onchange="selectShipping(this)">
+            <div class="shipping-option__info">
+              <div class="shipping-option__name">Standard Shipping</div>
+              <div class="shipping-option__desc">3 to 7 business days via Australia Post</div>
+            </div>
+            <div class="shipping-option__price">Confirmed on invoice</div>
+          </label>
+          <label class="shipping-option" id="ship-express">
+            <input type="radio" name="shipping" value="express" onchange="selectShipping(this)">
+            <div class="shipping-option__info">
+              <div class="shipping-option__name">Express Shipping</div>
+              <div class="shipping-option__desc">1 to 2 business days via Australia Post Express</div>
+            </div>
+            <div class="shipping-option__price">Confirmed on invoice</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="modal__section">
+        <div class="modal__section-title">Order Information</div>
+        <div class="field"><label class="field__label">PO Number (optional)</label><input type="text" class="field__input" placeholder="e.g. PO-2026-042" id="po-number"></div>
+        <div class="field"><label class="field__label">Order Notes</label><textarea class="field__textarea field__input" placeholder="Any special instructions, delivery notes, or requests..." id="order-notes"></textarea></div>
+      </div>
+
+      <div class="modal__section">
+        <div class="modal__section-title">Order Summary</div>
+        <div class="order-summary-block" id="checkout-summary"></div>
+        <div class="payment-info-block">
+          <p><strong>Payment options</strong><br>After submitting, Seven Seas Tea will review and send your invoice. Pay online via the invoice link, or choose bank transfer. Bank transfer details will be included on your invoice along with a PDF copy for your records.</p>
+        </div>
+      </div>
+
+      <button class="btn btn--teal btn--full" style="margin-top:1.5rem;font-size:13px;padding:1rem;" onclick="submitOrder()">Submit Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="success-overlay" id="success-modal">
+  <div class="success-card">
+    <div class="success-card__icon">✓</div>
+    <h2 class="success-card__title">Order Received</h2>
+    <p class="success-card__sub">Your order has been submitted. Seven Seas Tea will send your invoice shortly, with options to pay online or by bank transfer.</p>
+    <div class="success-detail" id="success-detail"></div>
+    <p style="font-size:12px;color:#aaa;line-height:1.7;margin-bottom:1.5rem;">A PDF copy of your order confirmation has been sent to your email for your records.</p>
+    <button class="btn btn--primary btn--full" onclick="closeSuccess()">Back to Portal</button>
+  </div>
+</div>
+
+<script>
+const PRODUCTS = [{"title":"Organic English Breakfast","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/English_Breakfast_e5d4fa80-d402-48fb-801a-a76814113f12.png?v=1774925887","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":30.0,"b2b_price_ex_gst":13.64},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73}]},{"title":"Organic Earl Grey","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Earl_Grey_d189ea20-5576-41a6-a995-b4985e35d82a.png?v=1774926150","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Bon Voyage - Organic French Earl Grey","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Bon_Voyage.png?v=1774926129","type":"Black tea","variants":[{"option1":"80g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Down Under Daintree","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Daintree.png?v=1774926373","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":12.0,"b2b_price_ex_gst":5.45},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":25.0,"b2b_price_ex_gst":11.36},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18}]},{"title":"Shangri La - Smoky Spiced Black Tea","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Shangri_La.png?v=1774926389","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Organic Assam Orange Pekoe","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Pekoe.png?v=1774926168","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":30.0,"b2b_price_ex_gst":13.64},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73}]},{"title":"Lapsang Souchong","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Lapsang.png?v=1774926424","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":29.95,"b2b_price_ex_gst":13.61},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":65.0,"b2b_price_ex_gst":29.55},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":110.0,"b2b_price_ex_gst":50.0}]},{"title":"Queen Of Hills Premium First Flush Darjeeling","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Queen.png?v=1774926359","type":"Black tea","variants":[{"option1":"70g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Black Forest","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Black_Forest_2.png?v=1774926409","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Australian Billy Tea","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Australian_Billy_Tea.png?v=1774926188","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Organic Moroccan Mint","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Moroccan_Mint_76ceb16a-9e41-45aa-8355-54e5b617a8b4.png?v=1774924758","type":"Green tea","variants":[{"option1":"70g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Green Australian Sencha","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Green_Sencha.png?v=1774924695","type":"Green tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Green Australian Genmaicha","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Genmachia_Green.png?v=1774924885","type":"Green tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"East West Green With Lemon Myrtle","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/East-west_Green.png?v=1774924709","type":"Green tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Organic Jasmine Green Tea","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Jasmine_Green.png?v=1774924678","type":"Green tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Tea Garden - Green Tea with Sweet Berry & Rose","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Tea_Garden_1b7d2d2b-72ba-47dc-8f44-28e877da7095.png?v=1774924729","type":"Green tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Holy Cow - Indian Oolong","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Oolong.png?v=1774929153","type":"Oolong","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":19.95,"b2b_price_ex_gst":9.07},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":45.0,"b2b_price_ex_gst":20.45},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":80.0,"b2b_price_ex_gst":36.36}]},{"title":"White Peony","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/White_peony_75d7ce8a-e4aa-4658-9315-ca85b8b15763.png?v=1774929135","type":"White tea","variants":[{"option1":"50g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":100.0,"b2b_price_ex_gst":45.45}]},{"title":"Taste of India - Organic Masala Chai","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Masala_Chai_18b34515-5846-4fb2-8678-5eb6b8861689.png?v=1774923915","type":"Chai","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":18.0,"b2b_price_ex_gst":8.18},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Out of Africa - Organic Rooibos Chai","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Rooibos_Chai_4c85e2ab-9a4f-4e4d-a6ce-1937489765bf.png?v=1774923935","type":"Chai","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":18.0,"b2b_price_ex_gst":8.18},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Golden Turmeric Chai","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Golden_Tumeric_Chai.png?v=1774923979","type":"Chai","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":18.0,"b2b_price_ex_gst":8.18},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Organic Sticky Chai","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Sticky_Chai_2e0b1d0e-94a1-43c7-b017-a8ea6c0c60fe.png?v=1774923880","type":"Chai","variants":[{"option1":"150g","option2":"","sku":"","barcode":"","price_inc_gst":20.0,"b2b_price_ex_gst":9.09},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Organic Dandelion Chai","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Dandelion_chai_18db4dba-001e-4069-89ce-a1f055f910cb.png?v=1774923997","type":"Chai","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":18.0,"b2b_price_ex_gst":8.18},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Organic Out of Africa Rooibos","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/OOA_Rooibos.png?v=1774928491","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":12.0,"b2b_price_ex_gst":5.45},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":25.0,"b2b_price_ex_gst":11.36},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18}]},{"title":"Organic Egyptian Chamomile","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Chamomile.png?v=1774928417","type":"Herbal","variants":[{"option1":"70g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Organic Lemongrass & Ginger","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Lemongrass_and_ginger.png?v=1774928340","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":30.0,"b2b_price_ex_gst":13.64},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73}]},{"title":"Organic Peppermint","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Just_Peppermint.png?v=1774928467","type":"Herbal","variants":[{"option1":"70g","option2":"","sku":"","barcode":"","price_inc_gst":12.0,"b2b_price_ex_gst":5.45},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Calypso","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Calypso_63c04ded-1a0e-4195-8183-9493dc7bd7ed.png?v=1774928376","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Cape to Cairo","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Cape_to_Cairo_2cb77829-4849-4027-8fee-4bb649728d3f.png?v=1774928556","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Love Your Liver Detox Blend","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Love_Your_Liver_8eaa1e50-2e64-46e2-93d3-af6d905e0089.png?v=1774954963","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":18.0,"b2b_price_ex_gst":8.18},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Organic Sleepy Blend","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Sleepy_tea_55ca734f-fd2f-48cd-be5a-a662e86d3b65.png?v=1775025419","type":"Herbal","variants":[{"option1":"40g","option2":"","sku":"","barcode":"","price_inc_gst":9.95,"b2b_price_ex_gst":4.52},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":90.0,"b2b_price_ex_gst":40.91}]},{"title":"Organic Mothers Milk","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Mothers_Milk.png?v=1775025291","type":"Herbal","variants":[{"option1":"70g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":90.0,"b2b_price_ex_gst":40.91}]},{"title":"Organic Immunity Blend","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Immunity_Blend_05bfdfa1-b783-4881-b70a-c20eeb16668d.png?v=1774928432","type":"Herbal","variants":[{"option1":"60g","option2":"","sku":"","barcode":"","price_inc_gst":14.95,"b2b_price_ex_gst":6.8},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":90.0,"b2b_price_ex_gst":40.91}]},{"title":"Organic Anti Inflammatory Blend","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Anti_Inflam.png?v=1774928305","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Organic Women's Balancing Blend","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Womens_Balancing_Blend.png?v=1774928450","type":"Herbal","variants":[{"option1":"60g","option2":"","sku":"","barcode":"","price_inc_gst":14.95,"b2b_price_ex_gst":6.8},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":90.0,"b2b_price_ex_gst":40.91}]},{"title":"Choc Berry (With a Hint of Mint)","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Choc_Berry_14adcc52-bc2a-498c-9823-2a2696182889.png?v=1774928401","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":30.0,"b2b_price_ex_gst":13.64},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73}]},{"title":"Organic Hibiscus Flower (Crushed)","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Hibiscus_flower_817d563e-325b-4b08-9c57-3b1b434b8fd9.png?v=1774928572","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":30.0,"b2b_price_ex_gst":13.64},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73}]},{"title":"Organic Liquorice Root","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Liquorice_Roet.png?v=1774576530","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":30.0,"b2b_price_ex_gst":13.64},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":50.0,"b2b_price_ex_gst":22.73}]},{"title":"Chai Spiced Latte","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Chai_Latte_ec5b5f4a-08cd-4e3b-bac8-7af65a594766.png?v=1774923963","type":"Latte Blends","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":8.95,"b2b_price_ex_gst":4.07},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":20.0,"b2b_price_ex_gst":9.09},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91}]},{"title":"Organic Turmeric Latte","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Tumeric_Latte_eff5df5f-2524-4aa7-a1c1-68e263b4e003.png?v=1774929117","type":"Latte Blends","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":7.95,"b2b_price_ex_gst":3.61}]},{"title":"Organic English Breakfast Tea Bags","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/EnglishBreakfastTeabag.png?v=1774579007","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27}]},{"title":"Organic Earl Grey Teabags","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/EarlGreyTeaBag.jpg?v=1774579040","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27}]},{"title":"Organic Sencha Green Teabags","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/GreenSenchaTeabag.png?v=1774579065","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27}]},{"title":"Organic Lemongrass & Ginger Teabags","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/LemongrassandGingerTeabag.png?v=1774579105","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27}]},{"title":"Organic Peppermint Teabags","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/PeppermintTeabag.png?v=1774579130","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27}]},{"title":"Organic Chamomile Teabags","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/ChamomileTeabag.png?v=1774579153","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27}]},{"title":"Organic Sleepy Time Teabags","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/SleepTeaTeabag.png?v=1774579190","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27}]},{"title":"Organic Wildberry Teabags","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/WildberryTeabag_be65aa9e-f608-48f8-9af7-27cb4d53505a.png?v=1774579211","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27}]},{"title":"Organic Matcha Powder","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Matcha.png?v=1774924743","type":"Matcha","variants":[{"option1":"50g","option2":"","sku":"","barcode":"","price_inc_gst":14.0,"b2b_price_ex_gst":6.36},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":100.0,"b2b_price_ex_gst":45.45}]},{"title":"Basket Tea Infuser","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Teathing1.png?v=1774579279","type":"Accessories","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":13.95,"b2b_price_ex_gst":6.34}]},{"title":"Empty Tea Bag","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/TeaBag.jpg?v=1774577981","type":"Tea Bags","variants":[{"option1":"Default Title","option2":"","sku":"","barcode":"","price_inc_gst":6.0,"b2b_price_ex_gst":2.73}]},{"title":"Organic Spice Islands","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Spice_Islands.png?v=1774926438","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Organic Saharan Sunset","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Sharan_Sunset.png?v=1774928518","type":"Herbal","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Haven","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Haven.png?v=1774926456","type":"Black tea","variants":[{"option1":"80g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":40.0,"b2b_price_ex_gst":18.18},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":70.0,"b2b_price_ex_gst":31.82}]},{"title":"Organic Gunpowder Green","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Gunpowder_Green_ecd9cfd9-78c2-4b8e-a6e0-aa2c9e99ba24.png?v=1775025188","type":"Green tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Decaf Black Tea","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Decaf_Black.png?v=1774926479","type":"Black tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Houjicha Green","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Houjicha.png?v=1774926495","type":"Green tea","variants":[{"option1":"100g","option2":"","sku":"","barcode":"","price_inc_gst":16.0,"b2b_price_ex_gst":7.27},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":35.0,"b2b_price_ex_gst":15.91},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":60.0,"b2b_price_ex_gst":27.27}]},{"title":"Organic Digestive Blend","image":"https://cdn.shopify.com/s/files/1/0771/8138/6985/files/Digestive_Blend.png?v=1774928325","type":"Herbal","variants":[{"option1":"70g","option2":"","sku":"","barcode":"","price_inc_gst":14.95,"b2b_price_ex_gst":6.8},{"option1":"250g","option2":"","sku":"","barcode":"","price_inc_gst":45.0,"b2b_price_ex_gst":20.45},{"option1":"500g","option2":"","sku":"","barcode":"","price_inc_gst":80.0,"b2b_price_ex_gst":36.36}]}];
+
+let cart = {};
+let allRows = [];
+
+function init() {
+  const types = [...new Set(PRODUCTS.map(p => p.type))].sort();
+  const sel = document.getElementById('type-filter');
+  types.forEach(t => {
+    const o = document.createElement('option');
+    o.value = t; o.textContent = t; sel.appendChild(o);
+  });
+  PRODUCTS.forEach((p, pi) => {
+    p.variants.forEach((v, vi) => { allRows.push({ pi, vi, p, v }); });
+  });
+  renderTable(allRows);
+}
+
+function renderTable(rows) {
+  const tbody = document.getElementById('product-tbody');
+  tbody.innerHTML = '';
+  const uniqueProducts = new Set(rows.map(r => r.p));
+  document.getElementById('product-count').textContent = `${uniqueProducts.size} products`;
+
+  let lastP = null;
+  rows.forEach(({ pi, vi, p, v }) => {
+    const key = `${pi}_${vi}`;
+    const qty = cart[key]?.qty || 0;
+    const isFirst = p !== lastP;
+    lastP = p;
+    const varLabel = v.option1 === 'Default Title' ? '' : v.option1;
+    const tr = document.createElement('tr');
+    tr.className = 'product-row' + (qty > 0 ? ' has-qty' : '');
+    tr.id = `row-${key}`;
+    tr.innerHTML = `
+      <td><div class="td-inner" style="padding:8px 10px;">${isFirst ? `<img class="product-thumb" src="${p.image}" alt="" onerror="this.style.display='none'">` : ''}</div></td>
+      <td><div class="td-inner">${isFirst ? `<div class="product-name">${p.title}</div><div class="product-type">${p.type}</div>` : ''}</div></td>
+      <td><div class="td-inner"><span class="variant-label">${varLabel}</span></div></td>
+      <td><div class="td-inner"><span class="sku-text">${v.sku || '—'}</span></div></td>
+      <td><div class="td-inner"><div class="price-b2b">$${v.b2b_price_ex_gst.toFixed(2)}</div></div></td>
+      <td><div class="td-inner"><div class="price-rrp">$${v.price_inc_gst.toFixed(2)}</div></div></td>
+      <td><div class="td-inner"><input type="number" class="qty-input${qty > 0 ? ' has-value' : ''}" id="qty-${key}" value="${qty || ''}" min="0" placeholder="0" oninput="updateQty('${key}',${pi},${vi},this.value)"></div></td>
+      <td><div class="td-inner"><span class="line-total" id="lt-${key}">${qty > 0 ? '$'+(qty*v.b2b_price_ex_gst).toFixed(2) : ''}</span></div></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  document.getElementById('no-results').style.display = rows.length === 0 ? 'block' : 'none';
+}
+
+function filterProducts() {
+  const s = document.getElementById('search-input').value.toLowerCase();
+  const t = document.getElementById('type-filter').value;
+  renderTable(allRows.filter(({ p }) => (!s || p.title.toLowerCase().includes(s) || p.type.toLowerCase().includes(s)) && (!t || p.type === t)));
+}
+
+function updateQty(key, pi, vi, raw) {
+  const qty = Math.max(0, parseInt(raw) || 0);
+  const p = PRODUCTS[pi], v = p.variants[vi];
+  if (qty > 0) cart[key] = { p, v, qty }; else delete cart[key];
+  const row = document.getElementById(`row-${key}`);
+  if (row) row.className = 'product-row' + (qty > 0 ? ' has-qty' : '');
+  const inp = document.getElementById(`qty-${key}`);
+  if (inp) { inp.className = 'qty-input' + (qty > 0 ? ' has-value' : ''); if (!qty) inp.value = ''; }
+  const lt = document.getElementById(`lt-${key}`);
+  if (lt) lt.textContent = qty > 0 ? `$${(qty*v.b2b_price_ex_gst).toFixed(2)}` : '';
+  renderCart();
+}
+
+function renderCart() {
+  const items = Object.entries(cart);
+  const totalLines = items.length;
+  const totalQty = items.reduce((s,[,v])=>s+v.qty,0);
+  const subtotal = items.reduce((s,[,{v,qty}])=>s+qty*v.b2b_price_ex_gst,0);
+  const gst = subtotal * 0.1;
+  document.getElementById('cart-count').textContent = totalLines === 0 ? '0 items' : `${totalLines} line${totalLines!==1?'s':''} · ${totalQty} units`;
+  const empty = document.getElementById('cart-empty');
+  const itemsEl = document.getElementById('cart-items');
+  const totalsEl = document.getElementById('cart-totals');
+  if (!totalLines) { empty.style.display='block'; itemsEl.style.display='none'; totalsEl.style.display='none'; return; }
+  empty.style.display='none'; itemsEl.style.display='block'; totalsEl.style.display='block';
+  itemsEl.innerHTML = items.map(([key,{p,v,qty}]) => {
+    const vl = v.option1==='Default Title'?'Standard':v.option1;
+    return `<div class="cart-item">
+      <img class="cart-item__img" src="${p.image}" alt="" onerror="this.style.display='none'">
+      <div class="cart-item__info"><div class="cart-item__name">${p.title}</div><div class="cart-item__meta">${vl} · Qty ${qty}</div></div>
+      <div class="cart-item__price">$${(qty*v.b2b_price_ex_gst).toFixed(2)}</div>
+      <button class="cart-item__remove" onclick="removeItem('${key}')">×</button>
+    </div>`;
+  }).join('');
+  document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+  document.getElementById('cart-gst').textContent = `$${gst.toFixed(2)}`;
+  document.getElementById('cart-total').textContent = `$${(subtotal+gst).toFixed(2)}`;
+}
+
+function removeItem(key) {
+  delete cart[key];
+  const inp = document.getElementById(`qty-${key}`);
+  if (inp) { inp.value=''; inp.className='qty-input'; }
+  const row = document.getElementById(`row-${key}`);
+  if (row) row.className='product-row';
+  const lt = document.getElementById(`lt-${key}`);
+  if (lt) lt.textContent='';
+  renderCart();
+}
+
+function showStorefront() {
+  document.getElementById('storefront').style.display='block';
+  document.getElementById('b2b-portal').style.display='none';
+  document.getElementById('b2b-nav-btn').classList.remove('active');
+}
+
+function showB2BPortal() {
+  document.getElementById('storefront').style.display='none';
+  document.getElementById('b2b-portal').style.display='block';
+  document.getElementById('b2b-nav-btn').classList.add('active');
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('portal-main').style.display='none';
+}
+
+function enterPortal(agent) {
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('portal-main').style.display='block';
+  document.getElementById('agent-banner').style.display = agent ? 'flex' : 'none';
+  document.getElementById('portal-name').textContent = agent ? 'Kalani (Counterpoint Agency)' : 'Demo Stockist';
+  switchTab('order');
+}
+
+function logout() {
+  cart={};
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('portal-main').style.display='none';
+  renderCart();
+}
+
+function switchTab(tab) {
+  document.getElementById('view-order').style.display = tab==='order'?'block':'none';
+  document.getElementById('view-orders').style.display = tab==='orders'?'block':'none';
+  document.getElementById('tab-order').className = 'portal-tab'+(tab==='order'?' active':'');
+  document.getElementById('tab-orders').className = 'portal-tab'+(tab==='orders'?' active':'');
+}
+
+function openCheckout() {
+  const items = Object.values(cart);
+  if (!items.length) return;
+  const subtotal = items.reduce((s,{v,qty})=>s+qty*v.b2b_price_ex_gst,0);
+  const gst = subtotal*0.1;
+  document.getElementById('checkout-summary').innerHTML =
+    items.map(({p,v,qty})=>{
+      const vl=v.option1==='Default Title'?'':`(${v.option1})`;
+      return `<div class="summary-row"><span>${p.title} ${vl} × ${qty}</span><span>$${(qty*v.b2b_price_ex_gst).toFixed(2)}</span></div>`;
+    }).join('') +
+    `<div class="summary-row" style="border-top:1px solid var(--color-border-solid);padding-top:0.5rem;margin-top:0.25rem;"><span style="color:#aaa;">GST (10%)</span><span>$${gst.toFixed(2)}</span></div>
+     <div class="summary-row summary-row--total"><span>Total (inc. GST)</span><span>$${(subtotal+gst).toFixed(2)}</span></div>
+     <p class="summary-note">Shipping and payment terms confirmed by Seven Seas Tea on your invoice.</p>`;
+  document.getElementById('checkout-modal').classList.add('open');
+}
+
+function closeCheckout() { document.getElementById('checkout-modal').classList.remove('open'); }
+
+function selectShipping(r) {
+  document.querySelectorAll('.shipping-option').forEach(el=>el.classList.remove('selected'));
+  r.closest('.shipping-option').classList.add('selected');
+}
+
+function submitOrder() {
+  const items = Object.values(cart);
+  const subtotal = items.reduce((s,{v,qty})=>s+qty*v.b2b_price_ex_gst,0);
+  const gst = subtotal*0.1;
+  const totalQty = items.reduce((s,{qty})=>s+qty,0);
+  const po = document.getElementById('po-number').value||'—';
+  const ship = document.querySelector('input[name="shipping"]:checked').value;
+  const ref = '#SST-00'+(Math.floor(Math.random()*10)+43);
+  document.getElementById('success-detail').innerHTML = `
+    <div class="success-detail-row"><span class="success-detail-label">Order Reference</span><span><strong>${ref}</strong></span></div>
+    <div class="success-detail-row"><span class="success-detail-label">Lines / Units</span><span>${items.length} lines · ${totalQty} units</span></div>
+    <div class="success-detail-row"><span class="success-detail-label">Total (inc. GST)</span><span><strong>$${(subtotal+gst).toFixed(2)}</strong></span></div>
+    <div class="success-detail-row"><span class="success-detail-label">Shipping</span><span>${ship==='express'?'Express':'Standard'} (confirmed on invoice)</span></div>
+    <div class="success-detail-row"><span class="success-detail-label">PO Reference</span><span>${po}</span></div>`;
+  closeCheckout();
+  document.getElementById('success-modal').classList.add('open');
+  cart={};
+  renderCart();
+  document.querySelectorAll('.qty-input').forEach(el=>{el.value='';el.className='qty-input';});
+  document.querySelectorAll('.product-row').forEach(el=>el.classList.remove('has-qty'));
+  document.querySelectorAll('.line-total').forEach(el=>el.textContent='');
+}
+
+function closeSuccess() { document.getElementById('success-modal').classList.remove('open'); }
+
+document.getElementById('checkout-modal').addEventListener('click', e => { if(e.target===e.currentTarget) closeCheckout(); });
+document.getElementById('success-modal').addEventListener('click', e => { if(e.target===e.currentTarget) closeSuccess(); });
+
+init();
+</script>
+</body>
+</html>
