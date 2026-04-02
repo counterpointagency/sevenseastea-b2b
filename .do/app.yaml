@@ -1,0 +1,10 @@
+name: sevenseastea-b2b
+static_sites:
+- name: sevenseastea-b2b
+  source_dir: /
+  index_document: sevenseastea-b2b-v2.html
+  error_document: sevenseastea-b2b-v2.html
+  github:
+    repo: counterpointagency/sevenseastea-b2b
+    branch: main
+    deploy_on_push: true
